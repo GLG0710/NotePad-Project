@@ -15,7 +15,7 @@ public class NoteJob implements Job {
     private final NoteService noteService;
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         UUID id = UUID.fromString(
                 context.getMergedJobDataMap().getString("noteId")
         );

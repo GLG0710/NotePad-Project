@@ -1,0 +1,38 @@
+Conta: 
+Login: String 
+Senha: String 
+Carteira de Investimento
+
+
+Investimentos (Classe pai abstrata):
+Atributos:
+Nome: String
+Tipo: String
+Valor Atual: Float
+Valor Aplicado: Float
+Ganho Percentual: Float
+Ganho Total: Float
+
+Métodos:
+void adicionarInvestimento(Nome, Tipo, Valor Aplicado)
+
+
+Fundo Imobiliario (Classe filha):
+Atributos:
+Super()
+
+
+Renda Fixa:
+Atributos:
+Super()
+// Vencimento: String
+Renda Bruta: Float
+Renda Liquída: Float
+
+
+Renda Variável:
+Atributos:
+Super()
+Quantidade: Int (valor aplicado/valor unitario)
+Valor Unitario: Float
+

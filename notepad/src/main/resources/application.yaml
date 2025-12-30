@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: Notepad
+
+  quartz:
+    job-store-type: memory
+    scheduler-name: test-scheduler
+
+  datasource:
+    url: jdbc:h2:mem:testdb  # Banco em memória
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true  # Acessa http://localhost:8080/h2-console
