@@ -7,15 +7,13 @@ spring:
     scheduler-name: test-scheduler
 
   datasource:
-    url: jdbc:h2:mem:testdb  # Banco em memória
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/notepad_db
+    username: postgres
+    password: 281299
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update  #Create or Upgrade the tables
     show-sql: true
-
-  h2:
-    console:
-      enabled: true  # Acessa http://localhost:8080/h2-console

@@ -1,17 +1,16 @@
-package com.project.notepad.schedule;
+package com.project.notepad.component;
 
 import com.project.notepad.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
-public class NoteJob implements Job {
+public class ScheduleJob implements Job {
     private final NoteService noteService;
 
     @Override

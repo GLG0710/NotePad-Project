@@ -1,7 +1,7 @@
 package com.project.notepad.service;
 
 import com.project.notepad.entity.Note;
-import com.project.notepad.schedule.NoteJob;
+import com.project.notepad.component.ScheduleJob;
 import org.quartz.*;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class SchedulerService {
 
     public void schedule(Note note) {
         try {
-            JobDetail jobDetail = JobBuilder.newJob(NoteJob.class)
+            JobDetail jobDetail = JobBuilder.newJob(ScheduleJob.class)
                     .withIdentity(jobKey(note))
                     .usingJobData("noteId", note.getId().toString())
                     .build();
