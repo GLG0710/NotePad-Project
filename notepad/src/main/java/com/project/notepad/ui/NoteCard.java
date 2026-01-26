@@ -20,65 +20,63 @@ import org.jspecify.annotations.NonNull;
 import java.time.format.DateTimeFormatter;
 
 public class NoteCard extends StackPane {
-        public NoteCard(Note note) {
 
-            // Box Size
-            setMinSize(260, 100);
-            setPrefSize(260, 100);
-            setMaxSize(260, 100);
+    public NoteCard(@NonNull Note note) {
+        // Box Size
+        int height = 130;
+        int width = 260;
 
-            // Box
-            Rectangle bg = new Rectangle(260, 100);
+        setMinSize(width, height);
+        setPrefSize(width, height);
+        setMaxSize(width, height);
 
-            // BorderRadius
-            bg.setArcWidth(15);
-            bg.setArcHeight(15);
+        // Box
+        Rectangle bg = new Rectangle(width, height);
 
-            // BackgroundColor
-            bg.setFill(new LinearGradient(
-                    0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                    new Stop(0, Color.web("#CCCCCC")),
-                    new Stop(1, Color.web("#808080"))
-            ));
+        // BorderRadius
+        bg.setArcWidth(15);
+        bg.setArcHeight(15);
 
-            // BoxBorder
-            bg.setStroke(Color.BLACK);
+        // BackgroundColor
+        bg.setFill(new LinearGradient(
+                0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#CCCCCC")),
+                new Stop(1, Color.web("#808080"))
+        ));
 
-            // Shadow Box
-            DropShadow shadow = new DropShadow();
-            shadow.setRadius(8);
-            shadow.setOffsetY(3);
-            shadow.setColor(Color.rgb(0, 0, 0, 0.25));
-            bg.setEffect(shadow);
+        // BoxBorder
+        bg.setStroke(Color.BLACK);
 
-            // Content
-            VBox content = createBox(note);
+        // Shadow Box
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(8);
+        shadow.setOffsetY(3);
+        shadow.setColor(Color.rgb(0, 0, 0, 0.25));
+        bg.setEffect(shadow);
 
-            getChildren().addAll(bg, content);
-            setAlignment(Pos.CENTER);
-        }
+        // Content
+        VBox content = createBox(note);
 
+        getChildren().addAll(bg, content);
+        setAlignment(Pos.CENTER);
+    }
 
     private static VBox createBox(Note note) {
-        // Top Row, with Title and DateTime
+        // Top Row, with Title and Date
         HBox topRow = createTopRow(note);
 
-        // Mid-Row, with only message
-        Label message = new Label(note.getMessage());
-        message.setMaxWidth(170);
-        message.setPrefWidth(170);
-        message.setMaxHeight(40);
-        message.setTextOverrun(OverrunStyle.ELLIPSIS);
-        message.setWrapText(true);
+        // Mid-Row, with Message and Time
+        HBox midRow = createMidRow(note);
 
         // Bottom Row, with the buttons: Configuration and Delete, and the label Active
         HBox bottomRow = createBottomRow(note);
 
-        VBox content = new VBox(10, topRow, message, bottomRow);
+        VBox content = new VBox(10, topRow, midRow, bottomRow);
         content.setPadding(new Insets(15));
         return content;
     }
 
+    // Title and Date
     private static HBox createTopRow(Note note) {
         // Title
         Label title = new Label(note.getTitle());
@@ -92,25 +90,45 @@ public class NoteCard extends StackPane {
         Label date = new Label(note.getTime().format(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")
         ));
-        Label time = new Label(note.getTime().format(
-                DateTimeFormatter.ofPattern("HH:mm")
-        ));
-
-        // Date box with date and time
         date.setFont(Font.font("System", FontWeight.SEMI_BOLD, 12));
-        time.setFont(Font.font("System", FontWeight.SEMI_BOLD, 12));
-        VBox dateBox = new VBox(2, date, time);
-        dateBox.setAlignment(Pos.TOP_RIGHT);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        HBox topRow = new HBox(title, spacer, dateBox);
+        HBox topRow = new HBox(title, spacer, date);
         topRow.setAlignment(Pos.TOP_LEFT);
 
         return topRow;
     }
 
+    // Message, Hour
+    private static HBox createMidRow(Note note) {
+        Label message = new Label(note.getMessage());
+        // Message Size Dimensions
+        message.setMaxWidth(170);
+        message.setPrefWidth(170);
+        message.setMaxHeight(40);
+        // Text wrap
+        message.setTextOverrun(OverrunStyle.ELLIPSIS);
+        message.setWrapText(true);
+        // Text Font
+        message.setFont(Font.font("System", FontWeight.MEDIUM, 12));
+
+        Label hour = new Label(note.getTime().format(
+                DateTimeFormatter.ofPattern("HH:mm")
+        ));
+        hour.setFont(Font.font("System", FontWeight.SEMI_BOLD, 12));
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox midRow = new HBox(message, spacer, hour);
+        midRow.setAlignment(Pos.TOP_LEFT);
+
+        return midRow;
+    }
+
+    // Config Button, Active Label, Delete Button
     private static HBox createBottomRow(Note note) {
         Button configBtn = new Button("⚙");
         Label activeLabel = new Label("Ativo: " + (note.isActive() ? "V" : "X"));

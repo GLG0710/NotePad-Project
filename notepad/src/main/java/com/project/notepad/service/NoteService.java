@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static com.project.notepad.entity.enum_repeat.Repeat.NONE;
@@ -34,6 +35,11 @@ public class NoteService {
     public Note read(UUID id) {
         return noteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Note not found"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Note> readAll() {
+        return noteRepository.findAll();
     }
 
     @Transactional
